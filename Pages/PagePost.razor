@@ -1,0 +1,54 @@
+@page "/pageapi"
+@using Model;
+@using Util;
+@inject PostClient client;
+<PageTitle>PageApiPost</PageTitle>
+
+<nav class="navbar navbar-expand-lg fondo">
+  <div class="container-fluid">
+    <NavLink class="navbar-brand" href=""><img src="logo.png" alt="logo" width="60px">  &nbsp; &nbsp; Api Post</NavLink>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <NavLink class="nav-link active" aria-current="page" href="">PageWelcome</NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="pageapi">PageApi</NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="pagecontact">PageContact</NavLink>
+        </li>
+      </ul> 
+    </div>
+  </div>
+</nav>
+
+<main class="container p-5">
+
+  <h1>List Post</h1>
+  <div class="row">
+  @foreach (Post post in posts)
+  {
+    <div class="card" style="width: 100;">
+      <div class="card-body">
+        <h5 class="card-title"><strong>Id:</strong>  @post.id</h5>
+        <p class="card-text"><strong>Title:</strong> @post.title</p>
+        <p class="card-text"><strong>Body:</strong> @post.body</p>
+        <a class="card-link" href="pagedetails/@post.id">Ver Detalle</a>
+      </div>
+    </div>
+  }
+</div>
+</main>
+
+@code {
+
+    private Post post = new Post();
+    private List<Post> posts = new List<Post>();
+    protected override async Task OnInitializedAsync()
+    {
+        for (int i = 1; i < 50; i++) {
+            posts.Add(await client.GetPost(i.ToString()));
+        }
+    }
+}

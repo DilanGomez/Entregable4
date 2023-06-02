@@ -1,0 +1,70 @@
+@page "/pagecontact"
+
+<PageTitle>PageContact</PageTitle>
+
+<nav class="navbar navbar-expand-lg fondo">
+  <div class="container-fluid">
+    <NavLink class="navbar-brand" href=""><img src="logo.png" alt="logo" width="60px">  &nbsp; &nbsp; Api Post</NavLink>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <NavLink class="nav-link active" aria-current="page" href="">PageWelcome</NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="pageapi">PageApi</NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="pagecontact">PageContact</NavLink>
+        </li>
+      </ul> 
+    </div>
+  </div>
+</nav>
+
+<main class="p-2 container" >
+  <div class="d-flex justify-content-center" style="width: 50%;" >
+  <form @onsubmit="send" class="container ">
+    <h2 style="color:rgb(255, 157, 0); "class="text-center">Formulario de contacto</h2>
+    <div class="mb-3 " >
+      <label for="exampleInputEmail1" class="form-label">Nombre:</label>
+      <input type="text" class="form-control" id="exampleInputEmail1"
+        aria-describedby="emailHelp" required @bind="nombre">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Correo:</label>
+      <input type="email" class="form-control" id="exampleInputEmail1"
+        aria-describedby="emailHelp" required @bind="correo">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Telefono:</label>
+      <input type="number" class="form-control" id="exampleInputEmail1"
+        aria-describedby="emailHelp" required @bind="telefono">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Mensaje:</label><br>
+      <textarea cols="60" rows="5" required @bind="mensaje"></textarea>
+    </div>
+    <button type="submit" class="btn btn-warning">Enviar</button>
+  </form>
+  </div>
+  <div class="p-3">
+   
+    @if(Show){
+        <p>Hola soy,<strong> @nombre</strong>, Quiero contactarme con ustedes por lo siguiente:<br>@mensaje. <br> Pueden comunicarse conmigo en: <br>
+        Correo electrónico: @correo <br>
+        Teléfono: @telefono
+        </p>
+    }
+  </div>  
+</main>
+@code{
+    private string? nombre {get;set;}
+    private string? correo {get;set;}
+
+    private string? telefono {get;set;}
+    private string? mensaje {get;set;}
+    public bool Show = false;
+  public void send(){
+    this.Show=true;
+  }
+}

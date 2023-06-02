@@ -1,0 +1,61 @@
+@page "/pagedetails/{id}"
+@using Model;
+@using Util;
+@inject PostClient client;
+<PageTitle>PageApiDetails</PageTitle>
+
+<nav class="navbar navbar-expand-lg fondo">
+  <div class="container-fluid">
+    <NavLink class="navbar-brand" href=""><img src="logo.png" alt="logo" width="60px">  &nbsp; &nbsp; Api Post</NavLink>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+            <NavLink class="nav-link active" aria-current="page" href="">PageWelcome</NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="pageapi">PageApi</NavLink>
+        </li>
+        <li class="nav-item">
+            <NavLink class="nav-link" href="pagecontact">PageContact</NavLink>
+        </li>
+      </ul> 
+    </div>
+  </div>
+</nav>
+
+<main class="container p-5">
+  <h1>Detalle Post de id: @id</h1>
+
+  @if (posts != null && posts.Count > 0)
+  {
+    @foreach (Postid item in posts)
+    {
+      if (item.postId == Convert.ToInt32(id))
+      {
+         <div class="card p-3 m-3 border-warning " >
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong> PostId:</strong> @item.postId</li>
+            <li class="list-group-item"><strong>Name:</strong> @item.name</li>
+            <li class="list-group-item"><strong>Email:</strong> @item.email</li>
+            <li class="list-group-item"><strong>Body:</strong> @item.body</li>
+          </ul>
+        </div>
+      }     
+    }
+  }
+
+</main>
+@code {
+    private List<Postid> posts;
+
+    [Parameter]
+    public string id { get; set; }
+
+     protected override async Task OnInitializedAsync()
+    {
+        posts = await client.GetPostid(id);
+    }
+
+    
+   
+}
